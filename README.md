@@ -29,4 +29,4 @@ move on to the next item in the queue or if the queue is empty the interface wil
 * This addon keeps your votes private from non officers by using officer chat
 
 This addon was made by Kaymon(Alliance) for the Northdale private server. If you find 
-bugs or other issues message him in game.
+bugs or other issues message him in game or on discord Kaymon#3528.
