@@ -3,5 +3,6 @@
 ## Version: 1.0
 ## Notes: Scuba cop loot council addon
 ## Author: Kaymon, Zela, Forest
+## SavedVariables: ScubaLoot_RewardedItems
 ScubaLoot.lua
 ScubaLoot.xml

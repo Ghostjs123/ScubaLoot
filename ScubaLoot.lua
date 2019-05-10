@@ -20,6 +20,8 @@ ScubaLoot_GUIMaximized = true
 
 ScubaLoot_OfficerList = {}
 
+ScubaLoot_RewardedItems = {}
+
 ScubaLoot_Sort = {
     Names = {}, -- names of the people linking
     Links = {} -- items that they linked
@@ -259,15 +261,15 @@ function ScubaLoot_MoveToNextMainItem()
 end
 
 function ScubaLoot_AnnounceWinner()
-    if(IsPartyLeader()) then
-        local winnerName = ScubaLoot_GetItemWinner()
-        if(string.find(winnerName, ",") ~= nil) then -- tied
-            SendChatMessage(winnerName .. " tied for: " .. ScubaLoot_LinkToChatLink(ScubaLoot_ItemBeingDecided), "OFFICER")
-        else
-            SendChatMessage(winnerName .. " wins: " .. ScubaLoot_LinkToChatLink(ScubaLoot_ItemBeingDecided), "OFFICER")
-        end
-        SendChatMessage("Voting complete", "RAID")
+    local winnerName = ScubaLoot_GetItemWinner()
+    local item = ScubaLoot_LinkToChatLink(ScubaLoot_ItemBeingDecided)
+    if(string.find(winnerName, ",") ~= nil) then -- tied
+        SendChatMessage(winnerName .. " tied for: " .. item, "OFFICER")
+    else
+        SendChatMessage(winnerName .. " wins: " .. item, "OFFICER")
+        table.insert(ScubaLoot_RewardedItems, winnerName .. ":" .. item)
     end
+    SendChatMessage("Voting complete", "RAID")
 end
 
 function ScubaLoot_EndMainItem()
