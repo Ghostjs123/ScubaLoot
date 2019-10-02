@@ -11,7 +11,7 @@
         </Size>
         <Scripts>
             <OnClick>
-                ScubaLoot_RegisterVote(this:GetID())
+                ScubaLoot:RegisterVote(self:GetID())
             </OnClick>
         </Scripts>
         <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
@@ -81,12 +81,12 @@
         </Layers>
         <Scripts>
             <OnEnter>
-                    getglobal(this:GetName().."Highlight"):Show()
-                    ScubaLoot_ShowTooltip(this:GetID())
+                    getglobal(self:GetName().."Highlight"):Show()
+                    ScubaLoot:ShowTooltip(self:GetID())
             </OnEnter>
             <OnLeave>
-                    if not this.lockedHighlight then
-                        getglobal(this:GetName().."Highlight"):Hide()
+                    if not self.lockedHighlight then
+                        getglobal(self:GetName().."Highlight"):Hide()
                     end
                     GameTooltip:Hide()
             </OnLeave>
@@ -140,12 +140,12 @@
         </Layers>
         <Scripts>
             <OnEnter>
-                    getglobal(this:GetName().."Highlight"):Show()
-                    ScubaLoot_ShowAlternateTooltip(this:GetID())
+                    getglobal(self:GetName().."Highlight"):Show()
+                    ScubaLoot:ShowAlternateTooltip(self:GetID())
             </OnEnter>
             <OnLeave>
-                    if not this.lockedHighlight then
-                        getglobal(this:GetName().."Highlight"):Hide()
+                    if not self.lockedHighlight then
+                        getglobal(self:GetName().."Highlight"):Hide()
                     end
                     GameTooltip:Hide()
             </OnLeave>
@@ -154,7 +154,7 @@
 
     <!-- ScubaLootFrame - main frame for the gui -->
 
-    <Frame name="ScubaLootFrame" toplevel="true" movable="true" parent="UIParent" enableMouse="true" hidden="true">
+    <Frame name="ScubaLootFrame" toplevel="true" movable="true" parent="UIParent" enableMouse="true" hidden="true" mixin="ScubaLoot">
         <TitleRegion setAllPoints="true"/>
         <Size>
             <AbsDimension x="330" y="80" />
@@ -163,12 +163,8 @@
             <Anchor point="CENTER" />
         </Anchors>
         <Scripts>
-            <OnLoad>
-                ScubaLoot_OnLoad()
-            </OnLoad>
-            <OnEvent>
-                ScubaLoot_OnEvent(event, arg1, arg2, arg3, arg4, arg5)
-            </OnEvent>
+            <OnLoad method="OnLoad" />
+            <OnEvent method="OnEvent" />
             <OnShow>
                 ScubaLootFrameTitleText_OnShow()
             </OnShow>
@@ -221,7 +217,7 @@
         <Frames>
 
 
-            <!-- FinishedVotingCheckbox - checkbox to designated that you are done voting - NO LONGER USING THIS, SAVING FOR REFERENCE-->
+            <!-- FinishedVotingCheckbox - checkbox to designated that you are done voting - NO LONGER USING self, SAVING FOR REFERENCE-->
 
             <CheckButton name="FinishedVotingCheckbox" hidden="true">
                 <Size>
@@ -249,7 +245,7 @@
                 </Layers>
                 <Scripts>
                     <OnClick>
-                            ScubaLoot_FinishedVoting()
+                            ScubaLoot:FinishedVoting()
                     </OnClick>
                 </Scripts>
                 <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
@@ -326,12 +322,12 @@
                 </Layers>
                 <Scripts>
                     <OnEnter>
-                            getglobal(this:GetName().."Highlight"):Show()
-                            ScubaLoot_ShowMainItemToolTip()
+                            getglobal(self:GetName().."Highlight"):Show()
+                            ScubaLoot:ShowMainItemToolTip()
                     </OnEnter>
                     <OnLeave>
-                            if not this.lockedHighlight then
-                                getglobal(this:GetName().."Highlight"):Hide()
+                            if not self.lockedHighlight then
+                                getglobal(self:GetName().."Highlight"):Hide()
                             end
                             GameTooltip:Hide()
                     </OnLeave>
@@ -594,7 +590,7 @@
             </CheckButton>
             <CheckButton name="ScubaLootRowCheckBox29" inherits="ScubaLootRowCheckBoxTemplate" id="29">
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox29">
+                    <Anchor point="TOPLEFT" relativeTo="ScubaLootRowCheckBox28">
                         <Offset>
                             <AbsDimension x="0" y="-26"/>
                         </Offset>
@@ -3143,7 +3139,7 @@
                 </Anchors>
                 <Scripts>
                     <OnClick>
-                            ScubaLoot_ToggleGUISize()
+                            ScubaLoot:ToggleGUISize()
                     </OnClick>
                 </Scripts>
             </Button>
@@ -3183,7 +3179,7 @@
                 </Anchors>
                 <Scripts>
                     <OnClick>
-                            ScubaLoot_EndMainItem()
+                            ScubaLoot:EndMainItem()
                     </OnClick>
                 </Scripts>
             </Button>

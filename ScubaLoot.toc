@@ -1,8 +1,8 @@
 ## Interface: 11200
 ## Title: ScubaLoot
-## Version: 1.0
+## Version: 2.0
 ## Notes: Scuba cop loot council addon
 ## Author: Kaymon, Zela, Forest
-## SavedVariables: ScubaLoot_RewardedItems
+## SavedVariables: ScubaLoot:RewardedItems
 ScubaLoot.lua
 ScubaLoot.xml
