@@ -8,7 +8,7 @@ ScubaLoot = {};
 -- *ALL* users of the addon (officers etc) will need to change these variables
 local officerRank1 = "Officer" -- Scuba Cops guild leader rank name
 local officerRank2 = "Officer" -- Scuba Cops officer rank name
-local officerRank3 = "Full Member" -- free rank name, we dont have a third`
+local officerRank3 = "Empty" -- free rank name, we dont have a third`
 -- IMPORTANT - these variables are guild specific, change them to work for yours
 
 local serverName = "-Incendius"
