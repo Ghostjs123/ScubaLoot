@@ -87,7 +87,8 @@ function ScubaLoot:Test()
 
 end
 
-function ScubaLoot:OnLoad()
+function ScubaLoot:OnLoad(self)
+    self:RegisterForDrag("LeftButton")
     self:RegisterEvent("VARIABLES_LOADED")
     self:RegisterEvent("CHAT_MSG_RAID")
     self:RegisterEvent("CHAT_MSG_RAID_LEADER")
@@ -105,7 +106,6 @@ function ScubaLoot:Init()
     ScubaLoot_QueuedItems = {}
 
     ScubaLoot_GUIMaximized = true
-
 
     -- call some functions
     ScubaLoot:FillOfficerList()
@@ -368,10 +368,13 @@ function ScubaLoot:UpdateVoteCounts()
 end
 
 function ScubaLoot:GetNameByID(itemLink)
-    local name, _, quality, _, _, _, _, _, _, texture = GetItemInfo(ScubaLoot:LinkToID(itemLink))
+    -- local name, _, quality, _, _, _, _, _, _, texture = GetItemInfo(ScubaLoot:LinkToID(itemLink))
+    local name, _, quality, _, _, _, _, _, _, texture = GetItemInfo(itemLink)
     if(quality == nil or quality < 0 or quality > 7) then
         quality = 1
         DEFAULT_CHAT_FRAME:AddMessage("Could not find quality for " .. itemLink)
+        DEFAULT_CHAT_FRAME:AddMessage("ID: " .. ScubaLoot:LinkToID(itemLink))
+        DEFAULT_CHAT_FRAME:AddMessage("link: " .. itemLink)
     end
     return name, texture, quality
 end
@@ -771,83 +774,83 @@ end
 
 -- Aditional functions
 
--- credit Sol
-string.match = string.match or function(str, pattern)
-    local tbl_res = { string.find(str, pattern) }
+-- -- credit Sol
+-- string.match = string.match or function(str, pattern)
+--     local tbl_res = { string.find(str, pattern) }
 
-    if tbl_res[3] then
-        return select(3, unpack(tbl_res))
-    else
-        return tbl_res[1], tbl_res[2]
-    end
-end
+--     if tbl_res[3] then
+--         return select(3, unpack(tbl_res))
+--     else
+--         return tbl_res[1], tbl_res[2]
+--     end
+-- end
 
--- credit Sol
-select = select or function(idx, ...)
-    local len = table.getn(arg)
+-- -- credit Sol
+-- select = select or function(idx, ...)
+--     local len = table.getn(arg)
 
-    if type(idx) == 'string' and idx == '#' then
-        return len
-    else
-        local tbl = {}
+--     if type(idx) == 'string' and idx == '#' then
+--         return len
+--     else
+--         local tbl = {}
 
-        for i = idx, len do
-            table.insert(tbl, arg[i])
-        end
+--         for i = idx, len do
+--             table.insert(tbl, arg[i])
+--         end
 
-        return unpack(tbl)
-    end
-end
+--         return unpack(tbl)
+--     end
+-- end
 
--- credit Sol
-string.split = string.split or function(delim, s, limit)
-    local split_string = {}
-    local rest = {}
+-- -- credit Sol
+-- string.split = string.split or function(delim, s, limit)
+--     local split_string = {}
+--     local rest = {}
 
-    local i = 1
-    for str in string.gfind(s, '([^' .. delim .. ']+)' .. delim .. '?') do
-        if limit and i >= limit then
-            table.insert(rest, str)
-        else
-            table.insert(split_string, str)
-        end
+--     local i = 1
+--     for str in string.gfind(s, '([^' .. delim .. ']+)' .. delim .. '?') do
+--         if limit and i >= limit then
+--             table.insert(rest, str)
+--         else
+--             table.insert(split_string, str)
+--         end
 
-        i = i + 1
-    end
+--         i = i + 1
+--     end
 
-    if limit then
-        table.insert(split_string, string.join(delim, unpack(rest)))
-    end
+--     if limit then
+--         table.insert(split_string, string.join(delim, unpack(rest)))
+--     end
 
-    return unpack(split_string)
-end
+--     return unpack(split_string)
+-- end
 
--- credit Sol
-string.gmatch = string.gmatch or function(str, pattern)
-    local init = 0
+-- -- credit Sol
+-- string.gmatch = string.gmatch or function(str, pattern)
+--     local init = 0
 
-    return function()
-        local tbl = { string.find(str, pattern, init) }
+--     return function()
+--         local tbl = { string.find(str, pattern, init) }
 
-        local start_pos = tbl[1]
-        local end_pos = tbl[2]
+--         local start_pos = tbl[1]
+--         local end_pos = tbl[2]
 
-        if start_pos then
-            init = end_pos + 1
+--         if start_pos then
+--             init = end_pos + 1
 
-            if tbl[3] then
-                return unpack({select(3, unpack(tbl))})
-            else
-                return string.sub(str, start_pos, end_pos)
-            end
-        end
-    end
-end
+--             if tbl[3] then
+--                 return unpack({select(3, unpack(tbl))})
+--             else
+--                 return string.sub(str, start_pos, end_pos)
+--             end
+--         end
+--     end
+-- end
 
--- credit Sol
-string.trim = string.trim or function(str)
-    return string.gsub(str, '^%s*(.-)%s*$', '%1')
-end
+-- -- credit Sol
+-- string.trim = string.trim or function(str)
+--     return string.gsub(str, '^%s*(.-)%s*$', '%1')
+-- end
 
 function ScubaLoot:HasValue(tab, val)
     for _, value in pairs(tab) do

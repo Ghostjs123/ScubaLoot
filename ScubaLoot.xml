@@ -163,11 +163,21 @@
             <Anchor point="CENTER" />
         </Anchors>
         <Scripts>
-            <OnLoad method="OnLoad" />
+            <OnLoad>
+				ScubaLoot:OnLoad(self)
+			</OnLoad>
             <OnEvent method="OnEvent" />
             <OnShow>
                 ScubaLootFrameTitleText_OnShow()
             </OnShow>
+            <OnDragStart>
+                if not self.isLocked then
+                    self:StartMoving()
+                end
+            </OnDragStart>
+            <OnDragStop>
+                self:StopMovingOrSizing()
+            </OnDragStop>
         </Scripts>
         <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
                   tile="true">
