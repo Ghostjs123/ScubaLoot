@@ -165,7 +165,7 @@ function ScubaLoot:GetMainItemLinks(arg1)
     local items = {}
     local added = false
     -- matches one or more items similar to |Hitem:6948:0:0:0:0:0:0:0|h[Hearthstone]|h
-    for item in string.gmatch(arg1, "|.-]|h") do
+    for item in string.gmatch(arg1, "|.-]|h|r") do
         table.insert(items, item)
         added = true
     end
@@ -182,13 +182,13 @@ function ScubaLoot:GetItemLinks(arg1)
     local items = {}
     local added = false
     -- matches one or more items similar to |Hitem:6948:0:0:0:0:0:0:0|h[Hearthstone]|h
-    for item in string.gmatch(arg1, "|.-]|h") do
+    for item in string.gmatch(arg1, "|.-]|h|r") do
         table.insert(items, item)
         added = true
     end
     if(added) then
         -- also need any additional text
-        arg1 = string.gsub(arg1, "|.-]|h", "") -- removes the links from the msg
+        arg1 = string.gsub(arg1, "|.-]|h|r", "") -- removes the links from the msg
         items[3] = arg1 -- index 3 could possibly be another item link so index it directly
         return items
     else
@@ -241,7 +241,7 @@ function ScubaLoot:UpdateMainItemQueue(itemLinks)
     for _, link in pairs(itemLinks) do
         if(link ~= nil) then
             -- make sure the link is a link bc itemLinks also contains the note text in index 3
-            if(string.find(link, "|.-]|h") ~= nil) then
+            if(string.find(link, "|.-]|h|r") ~= nil) then
                 table.insert(ScubaLoot_QueuedItems, link)
             end
         end
@@ -368,13 +368,18 @@ function ScubaLoot:UpdateVoteCounts()
 end
 
 function ScubaLoot:GetNameByID(itemLink)
-    -- local name, _, quality, _, _, _, _, _, _, texture = GetItemInfo(ScubaLoot:LinkToID(itemLink))
-    local name, _, quality, _, _, _, _, _, _, texture = GetItemInfo(itemLink)
+    local name, _, quality, _, _, _, _, _, _, texture = GetItemInfo(ScubaLoot:LinkToID(itemLink))
+    -- local name, _, quality, _, _, _, _, _, _, texture = GetItemInfo(itemLink)
     if(quality == nil or quality < 0 or quality > 7) then
+        -- DEFAULT_CHAT_FRAME:AddMessage(tostring(quality))
         quality = 1
-        DEFAULT_CHAT_FRAME:AddMessage("Could not find quality for " .. itemLink)
-        DEFAULT_CHAT_FRAME:AddMessage("ID: " .. ScubaLoot:LinkToID(itemLink))
-        DEFAULT_CHAT_FRAME:AddMessage("link: " .. itemLink)
+        -- DEFAULT_CHAT_FRAME:AddMessage("Could not find quality for " .. itemLink)
+        -- DEFAULT_CHAT_FRAME:AddMessage("ID: " .. ScubaLoot:LinkToID(itemLink))
+        -- DEFAULT_CHAT_FRAME:AddMessage("link: " .. itemLink)
+        -- DEFAULT_CHAT_FRAME:AddMessage("texture: " .. texture)
+    end
+    if texture == nil then
+        texture = "Interface\\Icons\\Spell_Nature_WispSplode"
     end
     return name, texture, quality
 end
